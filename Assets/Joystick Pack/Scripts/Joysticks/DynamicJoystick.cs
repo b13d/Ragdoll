@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class DynamicJoystick : Joystick
 {
-    public static event Action UpFinger;
+    public delegate void ClickAction();
+    public static event ClickAction ShotAction;
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
     [SerializeField] private float moveThreshold = 1;
@@ -28,7 +29,7 @@ public class DynamicJoystick : Joystick
     public override void OnPointerUp(PointerEventData eventData)
     {
         Debug.Log("Поднял палец");
-        UpFinger?.Invoke();
+        ShotAction?.Invoke();
         background.gameObject.SetActive(false);
         base.OnPointerUp(eventData);
     }
